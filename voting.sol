@@ -7,4 +7,23 @@ contract Voting {
   function Voting(bytes32[] candidateNames) {
     candidateList = candidateNames;
   }
+
+  function totalVotesFor(bytes32 candidate) returns (uint8) {
+    if (validCandidate(candidate) == false) throw;
+    return votesReceived[candidate]; // return value @key
+  }
+
+  function voteForCandidate(bytes32 candidate) {
+    if (validCandidate(candidate) == false) throw;
+    votesReceived[candidate] +=1; // increment the hash
+  }
+
+  function validCandidate(bytes32 candidate) returns (bool) {
+    for (uint i=0; i < candidateList.length; i++) {
+      if (candidateList[i] == candidate) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
